@@ -3,10 +3,10 @@ import './Footer.css';
 
 const Footer = () => {
   return (
-    <div className="footer">
-      <span>Developed by MB</span>
-      <span>2025</span>
-    </div>
+    <footer className="footer">
+      <span>Developed by Mykhaylo Brodskyy</span>
+      <span>{new Date().getFullYear()}</span>
+    </footer>
   );
 };
 

@@ -11,8 +11,10 @@ function Header({ handleAddClick, weatherData }) {
   return (
     <header className="header">
       <div className="header__container">
-        <img className="header__logo" src={logo} />
-        <p className="header__date">{currentDate}, {weatherData.city}</p>
+        <img className="header__logo" src={logo} alt="App logo" />
+        <p className="header__date">
+          {currentDate}, {weatherData.city}
+        </p>
       </div>
       <button
         onClick={handleAddClick}
