@@ -109,8 +109,6 @@ export const defaultWeatherOptions = {
   }
 }
 
-
-
 export const coordinates = {
   latitude: 48.232967,
   longitude: -101.292290,

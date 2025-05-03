@@ -1,0 +1,11 @@
+.modal__submit {
+    color: #000;
+}
+
+.modal__submit:hover {
+    opacity: 0.6;
+}
+
+.modal__submit:disabled {
+    opacity: 0.3;
+}
