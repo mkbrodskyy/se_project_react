@@ -3,7 +3,7 @@ import "../../assets/avatar.png";
 import "./Profile.css";
 import ClothesSection from "../ClothesSection/ClothesSection";
 
-function Profile({ onCardClick, handleAddClick }) {
+function Profile({ onCardClick, handleAddClick, clothingItems }) {
   return (
     <div className="profile">
       <section className="profile__sidebar">
@@ -11,6 +11,7 @@ function Profile({ onCardClick, handleAddClick }) {
       </section>
       <section className="profile__clothing-items">
         <ClothesSection
+          clothingItems={clothingItems}
           onCardClick={onCardClick}
           handleAddClick={handleAddClick}
         />

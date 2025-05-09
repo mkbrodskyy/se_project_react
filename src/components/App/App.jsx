@@ -11,7 +11,8 @@ import { useEffect, useState } from "react";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import { defaultClothingItems } from "../../utils/constants";
-import { getItems } from "../../utils/api";
+import { getItems, addItem, removeItem } from "../../utils/api";
+import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -21,6 +22,8 @@ function App() {
     city: "",
     isDay: false,
   });
+  // const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
   const [clothingItems, setClothingItems] = useState(defaultClothingItems);
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
@@ -38,13 +41,41 @@ function App() {
   const closeActiveModal = () => {
     setActiveModal("");
   };
+  const handleDeleteClick = (id) => {
+    setItemToDelete(id);
+    setActiveModal("confirm-delete");
+  };
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weatherType }) => {
-    setClothingItems([
-      { name, link: imageUrl, weather: weatherType },
-      ...clothingItems,
-    ]);
-    closeActiveModal();
+    // add the clothing item to the server (fetch request, then block)
+    // adds tne new clothing item visually to the dom
+
+    addItem({ name, imageUrl, weatherType })
+      .then((newItem) => {
+        setClothingItems([newItem, ...clothingItems]);
+        closeActiveModal();
+      })
+      .catch(console.error);
+    // setClothingItems([
+    //   { name, imageUrl, weather: weatherType },
+    //   ...clothingItems,
+    // ]);
+    // event.target.reset();
+  };
+
+  const handleConfirmDelete = () => {
+    if (itemToDelete) {
+      removeItem(itemToDelete)
+        .then(() => {
+          setClothingItems((prevItems) =>
+            prevItems.filter((item) => item._id !== itemToDelete)
+          );
+          // setIsConfirmationModalOpen(false);
+          closeActiveModal();
+          setItemToDelete(null);
+        })
+        .catch(console.error);
+    }
   };
 
   useEffect(() => {
@@ -59,7 +90,7 @@ function App() {
   useEffect(() => {
     getItems()
       .then((data) => {
-        console.log(data);
+        setClothingItems(data.reverse());
       })
       .catch(console.error);
   }, []);
@@ -77,7 +108,7 @@ function App() {
               element={
                 <Main
                   weatherData={weatherData}
-                  onCardClick={handleCardClick}
+                  handleCardClick={handleCardClick}
                   clothingItems={clothingItems}
                 />
               }
@@ -88,6 +119,7 @@ function App() {
                 <Profile
                   onCardClick={handleCardClick}
                   handleAddClick={handleAddClick}
+                  clothingItems={clothingItems}
                 />
               }
             />
@@ -103,6 +135,13 @@ function App() {
           activeModal={activeModal}
           card={selectedCard}
           onClose={closeActiveModal}
+          onDeleteClick={handleDeleteClick}
+        />
+        <DeleteConfirmationModal
+          activeModal={activeModal === "confirm-delete"}
+          // onClose={() => setIsConfirmationModalOpen(false)}
+          onClose={closeActiveModal}
+          onConfirm={handleConfirmDelete}
         />
       </div>
     </CurrentTemperatureUnitContext.Provider>

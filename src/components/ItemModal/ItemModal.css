@@ -3,7 +3,6 @@
   position: relative;
   padding: 28px 28px 36px;
   width: 498px;
-  height: 610px;
   max-width: 496px;
   max-height: 436px;
   box-sizing: border-box;
@@ -23,17 +22,20 @@
   font-family: "Cabinet Grotesk", Arial, sans-serif;
   font-size: 20px;
   font-weight: 400;
-  line-height: 20px;
-  margin-bottom: 12px;
-  margin-top: 0;
+  /* line-height: 20px; */
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
-.modal__weather {
+.modal__weather {     
   font-family: "Cabinet Grotesk", Arial, sans-serif;
   font-size: 20px;
   font-weight: 400;
-  line-height: 20px;
-  margin-bottom: 0;
+  /* line-height: 20px; */
+  margin-bottom: auto; /* Push it up to create space below */
+  padding: 0;
+  border: 0;
 }
 
 .modal__content_type_image {
@@ -42,4 +44,24 @@
   padding: 0;
   height: auto;
   max-height: none;
+}
+
+.modal__footer {
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 20px;
+  background-color: #fff;
+  width: 100%;
+  padding: 20px 28px 32px 28px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  /* display: flex; */
+  /* height: 112px; */
+}
+
+.modal__footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
