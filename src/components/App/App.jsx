@@ -22,12 +22,12 @@ function App() {
     city: "",
     isDay: false,
   });
-  // const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
   const [clothingItems, setClothingItems] = useState(defaultClothingItems);
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [isLoading, setIsLoading] = useState(false);
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
   };
@@ -95,13 +95,29 @@ function App() {
       .catch(console.error);
   }, []);
 
+  useEffect(() => {
+    if (!activeModal) return;
+
+    const handleEscClose = (e) => {
+      if (e.key === "Escape") {
+        closeActiveModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscClose);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [activeModal]);
+
   return (
     <CurrentTemperatureUnitContext.Provider
       value={{ currentTemperatureUnit, handleToggleSwitchChange }}
     >
       <div className="page">
         <div className="page__content">
-          <Header handleAddClick={handleAddClick} weatherData={weatherData} />
+          <Header handleAddClick={handleAddClick} weatherData={weatherData} isLoggedIn={isLoggedIn} />
           <Routes>
             <Route
               path="/"
@@ -138,8 +154,7 @@ function App() {
           onDeleteClick={handleDeleteClick}
         />
         <DeleteConfirmationModal
-          activeModal={activeModal === "confirm-delete"}
-          // onClose={() => setIsConfirmationModalOpen(false)}
+          isOpen={activeModal === "confirm-delete"}
           onClose={closeActiveModal}
           onConfirm={handleConfirmDelete}
         />
