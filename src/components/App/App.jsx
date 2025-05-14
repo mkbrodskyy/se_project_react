@@ -50,12 +50,11 @@ function App() {
     // add the clothing item to the server (fetch request, then block)
     // adds tne new clothing item visually to the dom
 
-    addItem({ name, imageUrl, weatherType })
-      .then((newItem) => {
-        setClothingItems([newItem, ...clothingItems]);
-        closeActiveModal();
-      })
-      .catch(console.error);
+    return addItem(name, imageUrl, weatherType).then((newItem) => {
+      setClothingItems([newItem, ...clothingItems]);
+      closeActiveModal();
+    });
+
     // setClothingItems([
     //   { name, imageUrl, weather: weatherType },
     //   ...clothingItems,
@@ -117,7 +116,7 @@ function App() {
     >
       <div className="page">
         <div className="page__content">
-          <Header handleAddClick={handleAddClick} weatherData={weatherData} isLoggedIn={isLoggedIn} />
+          <Header handleAddClick={handleAddClick} weatherData={weatherData} />
           <Routes>
             <Route
               path="/"

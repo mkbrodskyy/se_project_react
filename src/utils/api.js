@@ -7,7 +7,7 @@ function getItems() {
 }
 
 // addItem
-const addItem = ({ name, imageUrl, weather }) => {
+const addItem = (name, imageUrl, weather) => {
   return fetch(`${baseUrl}/items`, {
     method: "POST",
     headers: {
@@ -17,7 +17,7 @@ const addItem = ({ name, imageUrl, weather }) => {
   }).then((res) => {
     return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
   });
-}
+};
 
 // removeItem
 const removeItem = (id) => {

@@ -10,7 +10,7 @@ function useForm(inputValues) {
     setValues({ ...values, [name]: value });
   };
 
-  return { values, handleChange };
+  return { values, handleChange, setValues };
 }
 
 export default useForm;

@@ -8,7 +8,7 @@ export default function AddItemModal({
   onAddItemModalSubmit,
   isLoading,
 }) {
-  const { values, handleChange } = useForm({
+  const { values, handleChange, setValues } = useForm({
     name: "",
     imageUrl: "",
     weatherType: "",
@@ -20,7 +20,14 @@ export default function AddItemModal({
       name: values.name,
       imageUrl: values.imageUrl,
       weatherType: values.weatherType,
-    });
+    }).then(() => {
+      // reset the form
+      setValues({
+        name: "",
+        imageUrl: "",
+        weatherType: "",
+      });
+    }).catch((err)=>{console.error(err)});
   };
 
   return (
