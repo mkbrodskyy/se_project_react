@@ -1,8 +1,16 @@
 import React from "react";
 import closeBtn from "../../assets/closebtn.svg";
 import "./DeleteConfirmationModal.css";
+import { use } from "react";
+import useModalClose from "../hooks/useModalClose";
 
-const DeleteConfirmationModal = ({ activeModal, onClose, onConfirm, isOpen }) => {
+const DeleteConfirmationModal = ({
+  activeModal,
+  onClose,
+  onConfirm,
+  isOpen,
+}) => {
+  useModalClose(isOpen, onClose);
   return (
     <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
       <div className="modal__content modal__content_type_confirmation">

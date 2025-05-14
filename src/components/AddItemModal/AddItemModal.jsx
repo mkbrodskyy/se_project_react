@@ -4,7 +4,7 @@ import useForm from "../hooks/useForm";
 
 export default function AddItemModal({
   onClose,
-  activeModal,
+  isOpen,
   onAddItemModalSubmit,
   isLoading,
 }) {
@@ -35,7 +35,7 @@ export default function AddItemModal({
       title="New garment"
       buttonText={isLoading ? "Saving..." : "Add garment"} // Update button text
       onClose={onClose}
-      activeModal={activeModal}
+      isOpen={isOpen}
       onSubmit={handleSubmit}
     >
       <label htmlFor="name" className="modal__label">
