@@ -198,7 +198,6 @@
       "weather": "hot",
       "_id": 37
     },
-
     {
       "name": "New item",
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/T-Shirt.png?etag=44ed1963c44ab19cd2f5011522c5fc09",
@@ -214,8 +213,20 @@
     {
       "name": "New item",
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/T-Shirt.png?etag=44ed1963c44ab19cd2f5011522c5fc09",
+      "weather": "cold",
+      "_id": 42
+    },
+    {
+      "name": "sdsdfsdf",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/T-Shirt.png?etag=44ed1963c44ab19cd2f5011522c5fc09",
+      "weather": "cold",
+      "_id": 43
+    },
+    {
+      "name": "New item",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/T-Shirt.png?etag=44ed1963c44ab19cd2f5011522c5fc09",
       "weather": "warm",
-      "_id": 41
+      "_id": 44
     }
   ]
 }

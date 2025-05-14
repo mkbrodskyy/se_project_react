@@ -1,6 +1,6 @@
 import "./AddItemModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import useForm from "../hooks/useForm";
+import useForm from "../../hooks/useForm";
 
 export default function AddItemModal({
   onClose,
@@ -20,14 +20,18 @@ export default function AddItemModal({
       name: values.name,
       imageUrl: values.imageUrl,
       weatherType: values.weatherType,
-    }).then(() => {
-      // reset the form
-      setValues({
-        name: "",
-        imageUrl: "",
-        weatherType: "",
+    })
+      .then(() => {
+        // reset the form
+        setValues({
+          name: "",
+          imageUrl: "",
+          weatherType: "",
+        });
+      })
+      .catch((err) => {
+        console.error(err);
       });
-    }).catch((err)=>{console.error(err)});
   };
 
   return (

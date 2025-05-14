@@ -1,7 +1,7 @@
 import React from "react";
 import closeBtn from "../../assets/closebtn.svg";
 import "./ItemModal.css";
-import useModalClose from "../hooks/useModalClose";
+import useModalClose from "../../hooks/useModalClose";
 
 const ItemModal = ({ isOpen, onClose, card, onDeleteClick }) => {
   useModalClose(isOpen, onClose);
