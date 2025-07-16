@@ -3,9 +3,19 @@ import logo from "../../assets/logo.svg";
 import avatar from "../../assets/avatar.png";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
+import React, { useContext } from "react";
 
-function Header({ handleAddClick, weatherData }) {
+function Header({
+  handleAddClick,
+  weatherData,
+  isLoggedIn,
+  onSignUp,
+  onSignIn,
+  onSignOut,
+}) {
+  const currentUser = useContext(CurrentUserContext);
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -30,16 +40,29 @@ function Header({ handleAddClick, weatherData }) {
         >
           + Add clothes
         </button>
-        <Link to="/profile" className="header__link">
+        {isLoggedIn ? (
+          <>
+            <Link to="/profile" className="header__link">
+              <div className="header__user-container">
+                <p className="header__username">{currentUser?.name}</p>
+                <img
+                  src={currentUser?.avatar || avatar}
+                  alt="User avatar"
+                  className="header__avatar"
+                  style={{ width: 32, height: 32, borderRadius: "50%" }}
+                />
+              </div>
+            </Link>
+            <button onClick={onSignOut} className="header__signout-btn">
+              Sign Out
+            </button>
+          </>
+        ) : (
           <div className="header__user-container">
-            <p className="header__username">Terrence Tegegne</p>
-            <img
-              src={avatar}
-              alt="Terrence Tegegne"
-              className="header__avatar"
-            />
+            <button onClick={onSignUp}>Sign Up</button>
+            <button onClick={onSignIn}>Sign In</button>
           </div>
-        </Link>
+        )}
       </div>
     </header>
   );
