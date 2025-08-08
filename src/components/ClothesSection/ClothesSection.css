@@ -9,8 +9,7 @@
   list-style: none;
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-auto-rows: 304px;
+  grid-template-columns: repeat(auto-fill, 323px);
   grid-gap: 22px;
   box-sizing: border-box;
   justify-items: center;

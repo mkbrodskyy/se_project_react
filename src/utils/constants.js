@@ -106,12 +106,12 @@ export const defaultWeatherOptions = {
   },
   night: {
     url: new URL("../assets/night/default.png", import.meta.url).href,
-  }
-}
+  },
+};
 
 export const coordinates = {
-  latitude: 48.232967,
-  longitude: -101.292290,
+  latitude: 37.104153,
+  longitude: -113.585709,
 };
 
 export const APIkey = "2215a9dff5e57738e9649bceda8bf0fc";

@@ -10,6 +10,8 @@ function Profile({
   onCardClick,
   handleAddClick,
   onEditProfile,
+  onSignOut,
+  onCardLike,
 }) {
   const currentUser = useContext(CurrentUserContext);
 
@@ -22,7 +24,10 @@ function Profile({
       <section className="profile__sidebar">
         <SideBar />
         <button className="profile__edit-btn" onClick={onEditProfile}>
-          Edit Profile
+          Change profile data
+        </button>
+        <button onClick={onSignOut} className="header__signout-btn">
+          Sign Out
         </button>
       </section>
       <section className="profile__clothing-items">
@@ -30,6 +35,7 @@ function Profile({
           clothingItems={userItems}
           onCardClick={onCardClick}
           handleAddClick={handleAddClick}
+          onCardLike={onCardLike}
         />
       </section>
     </div>

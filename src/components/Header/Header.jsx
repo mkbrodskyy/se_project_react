@@ -33,15 +33,16 @@ function Header({
       </div>
       <div className="header__navigation">
         <ToggleSwitch />
-        <button
-          onClick={handleAddClick}
-          type="button"
-          className="header__add-clothes-btn"
-        >
-          + Add clothes
-        </button>
+
         {isLoggedIn ? (
           <>
+            <button
+              onClick={handleAddClick}
+              type="button"
+              className="header__add-clothes-btn"
+            >
+              + Add clothes
+            </button>
             <Link to="/profile" className="header__link">
               <div className="header__user-container">
                 <p className="header__username">{currentUser?.name}</p>
@@ -53,14 +54,23 @@ function Header({
                 />
               </div>
             </Link>
-            <button onClick={onSignOut} className="header__signout-btn">
-              Sign Out
-            </button>
           </>
         ) : (
           <div className="header__user-container">
-            <button onClick={onSignUp}>Sign Up</button>
-            <button onClick={onSignIn}>Sign In</button>
+            <button
+              onClick={onSignUp}
+              type="button"
+              className="header__add-clothes-btn"
+            >
+              Sign Up
+            </button>
+            <button
+              onClick={onSignIn}
+              type="button"
+              className="header__add-clothes-btn"
+            >
+              Log In
+            </button>
           </div>
         )}
       </div>

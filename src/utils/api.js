@@ -7,22 +7,24 @@ function getItems() {
 }
 
 // addItem
-const addItem = (name, imageUrl, weather) => {
+const addItem = ({ name, imageUrl, weatherType }, token) => {
   return fetch(`${baseUrl}/items`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ name, imageUrl, weather }),
+    body: JSON.stringify({ name, imageUrl, weather: weatherType }),
   }).then(checkResponse);
 };
 
 // removeItem
-const removeItem = (id) => {
+const removeItem = (id, token) => {
   return fetch(`${baseUrl}/items/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
     },
   }).then(checkResponse);
 };

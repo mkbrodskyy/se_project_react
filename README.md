@@ -9,7 +9,7 @@ https://www.figma.com/file/DTojSwldenF9UPKQZd6RRb/Sprint-10%3A-WTWR
 
 This project uses a custom Express and MongoDB backend.  
 You can find the backend code and setup instructions here:  
-[se_project_express (Project 13 Backend Repo)](git@github.com:mkbrodskyy/se_project_react.git)
+[se_project_express (Project 13 Backend Repo)](git@github.com:mkbrodskyy/se_project_express.git)
 
 ## Features Implemented
 

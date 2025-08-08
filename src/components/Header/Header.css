@@ -53,3 +53,13 @@
   display: flex;
   align-items: center;
 }
+
+.header__signout-btn {
+  margin: 0 20px 0 0;
+  background: none;
+  border: none;
+  color: inherit;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+}

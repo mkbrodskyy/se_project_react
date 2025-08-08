@@ -14,24 +14,22 @@ export default function AddItemModal({
     weatherType: "",
   });
 
+  function resetForm() {
+    setValues({
+      name: "",
+      imageUrl: "",
+      weatherType: "",
+    });
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     onAddItemModalSubmit({
       name: values.name,
       imageUrl: values.imageUrl,
       weatherType: values.weatherType,
-    })
-      .then(() => {
-        // reset the form
-        setValues({
-          name: "",
-          imageUrl: "",
-          weatherType: "",
-        });
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    }, resetForm);
   };
 
   return (
@@ -46,7 +44,7 @@ export default function AddItemModal({
         Name{" "}
         <input
           type="text"
-          className="modal__input"
+          className="modal__input modal__input-text"
           id="name"
           placeholder="Name"
           required
@@ -61,7 +59,7 @@ export default function AddItemModal({
         Image{" "}
         <input
           type="url"
-          className="modal__input"
+          className="modal__input modal__input-text"
           id="imageUrl"
           placeholder="Image URL"
           required

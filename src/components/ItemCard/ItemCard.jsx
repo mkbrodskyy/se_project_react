@@ -1,12 +1,16 @@
 // import ItemCard from "../ItemCard/ItemCard}";
 import React, { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
+import heartOutline from "../../assets/heart-outline.svg";
+import heartFilled from "../../assets/heart-filled.svg";
 import "./ItemCard.css";
 
 function ItemCard({ item, onCardClick, onCardLike }) {
   const currentUser = useContext(CurrentUserContext);
   const isLoggedIn = !!currentUser;
   const isLiked = item.likes.some((id) => id === currentUser?._id);
+
+// console.log (item.likes[0]);
 
   const handleCardClick = () => {
     onCardClick(item);
@@ -18,25 +22,30 @@ function ItemCard({ item, onCardClick, onCardLike }) {
 
   return (
     <li className="card">
-      <h2 className="card__name">{item.name}</h2>
-      <img
-        onClick={handleCardClick}
-        className="card__image"
-        src={item.imageUrl}
-        alt={item.name}
-      />
-      <div className="item-card__like-container">
+      <div className="card__header">
+        <h2 className="card__name">{item.name}</h2>
         {isLoggedIn && (
           <button
             className={`item-card__like-btn${
               isLiked ? " item-card__like-btn_active" : ""
             }`}
             onClick={handleLike}
+            aria-label={isLiked ? "Unlike item" : "Like item"}
           >
-            {isLiked ? "Unlike" : "Like"}
+            <img
+              src={isLiked ? heartFilled : heartOutline}
+              alt={isLiked ? "Unlike" : "Like"}
+              className="item-card__like-icon"
+            />
           </button>
         )}
       </div>
+      <img
+        onClick={handleCardClick}
+        className="card__image"
+        src={item.imageUrl}
+        alt={item.name}
+      />
     </li>
   );
 }

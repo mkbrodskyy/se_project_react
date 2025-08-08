@@ -30,7 +30,7 @@ function App() {
     isDay: false,
   });
   const [itemToDelete, setItemToDelete] = useState(null);
-  const [clothingItems, setClothingItems] = useState(defaultClothingItems);
+  const [clothingItems, setClothingItems] = useState([]);
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -62,16 +62,26 @@ function App() {
     setActiveModal("confirm-delete");
   };
 
-  const handleAddItemModalSubmit = ({ name, imageUrl, weatherType }) => {
-    return addItem(name, imageUrl, weatherType).then((newItem) => {
-      setClothingItems([newItem, ...clothingItems]);
-      closeActiveModal();
-    });
+  const handleAddItemModalSubmit = (
+    { name, imageUrl, weatherType },
+    resetForm
+  ) => {
+    const token = localStorage.getItem("jwt");
+    addItem({ name, imageUrl, weatherType }, token)
+      .then((newItem) => {
+        setClothingItems([newItem, ...clothingItems]);
+        closeActiveModal();
+        resetForm();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleConfirmDelete = () => {
     if (itemToDelete) {
-      removeItem(itemToDelete)
+      const token = localStorage.getItem("jwt");
+      removeItem(itemToDelete, token)
         .then(() => {
           setClothingItems((prevItems) =>
             prevItems.filter((item) => item._id !== itemToDelete)
@@ -149,18 +159,23 @@ function App() {
   };
 
   const handleCardLike = ({ _id, isLiked }) => {
+    // console.log("handleCardLike called:", { _id, isLiked });
     const token = localStorage.getItem("jwt");
     if (!isLiked) {
+      // console.log("Adding like for card:", _id);
       addCardLike(_id, token)
         .then((updatedCard) => {
+          // console.log("Like added, updated card:", updatedCard);
           setClothingItems((cards) =>
             cards.map((item) => (item._id === _id ? updatedCard : item))
           );
         })
         .catch(console.error);
     } else {
+      // console.log("Removing like for card:", _id);
       removeCardLike(_id, token)
         .then((updatedCard) => {
+          // console.log("Like removed, updated card:", updatedCard);
           setClothingItems((cards) =>
             cards.map((item) => (item._id === _id ? updatedCard : item))
           );
@@ -198,6 +213,7 @@ function App() {
   useEffect(() => {
     getItems()
       .then((data) => {
+        console.log("Items loaded from API:", data);
         setClothingItems(data.reverse());
       })
       .catch(console.error);
@@ -239,6 +255,8 @@ function App() {
                       handleAddClick={handleAddClick}
                       clothingItems={clothingItems}
                       onEditProfile={handleOpenEditProfileModal} // <-- Add this prop
+                      onSignOut={handleSignOut}
+                      onCardLike={handleCardLike}
                     />
                   </ProtectedRoute>
                 }

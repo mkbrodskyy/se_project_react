@@ -21,37 +21,58 @@ const RegisterModal = ({ isOpen, onClose, onRegister }) => {
         </button>
         <form className="modal__form" onSubmit={handleSubmit}>
           <h2 className="modal__title">Sign Up</h2>
-          <input
-            type="text"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-          <input
-            type="url"
-            placeholder="Avatar URL"
-            value={avatar}
-            onChange={(e) => setAvatar(e.target.value)}
-            required
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button type="submit" className="modal__submit-button">
-            Register
-          </button>
+          <label className="modal__label modal__label_type_profile">
+            Email *
+            <input
+              type="email"
+              className="modal__input"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </label>
+          <label className="modal__label modal__label_type_profile">
+            Password *
+            <input
+              type="password"
+              className="modal__input"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </label>
+          <label className="modal__label modal__label_type_profile">
+            Name *
+            <input
+              type="text"
+              className="modal__input"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </label>
+          <label className="modal__label modal__label_type_profile">
+            Avatar URL *
+            <input
+              type="url"
+              className="modal__input"
+              placeholder="Avatar URL"
+              value={avatar}
+              onChange={(e) => setAvatar(e.target.value)}
+              required
+            />
+          </label>
+          <div className="modal__submit-wrapper">
+            <button type="submit" className="modal__submit-button">
+              Sign Up
+            </button>
+            <button type="submit" className="modal__submit-button">
+              or Log In
+            </button>
+          </div>
         </form>
       </div>
     </div>
