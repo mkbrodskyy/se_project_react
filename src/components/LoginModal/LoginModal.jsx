@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import closeBtn from "../../assets/closebtn.svg";
 import "./LoginModal.css";
 
-const LoginModal = ({ isOpen, onClose, onLogin }) => {
+const LoginModal = ({ isOpen, onClose, onLogin, onSignUp }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -45,7 +45,14 @@ const LoginModal = ({ isOpen, onClose, onLogin }) => {
             <button type="submit" className="modal__submit-button">
               Log In
             </button>
-            <button type="submit" className="modal__submit-button">
+            <button
+              type="button"
+              className="modal__submit-button"
+              onClick={() => {
+                onClose();
+                onSignUp();
+              }}
+            >
               or Sign Up
             </button>
           </div>

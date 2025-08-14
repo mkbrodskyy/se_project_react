@@ -24,20 +24,23 @@ export default function AddItemModal({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    onAddItemModalSubmit({
-      name: values.name,
-      imageUrl: values.imageUrl,
-      weatherType: values.weatherType,
-    }, resetForm);
+
+    onAddItemModalSubmit(
+      {
+        name: values.name,
+        imageUrl: values.imageUrl,
+        weatherType: values.weatherType,
+      },
+      resetForm
+    );
   };
 
   return (
     <ModalWithForm
+      name="add-garment"
       title="New garment"
-      buttonText={isLoading ? "Saving..." : "Add garment"} // Update button text
+      buttonText={isLoading ? "Saving..." : "Add garment"}
       onClose={onClose}
-      isOpen={isOpen}
       onSubmit={handleSubmit}
     >
       <label htmlFor="name" className="modal__label">

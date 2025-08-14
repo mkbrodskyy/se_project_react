@@ -38,7 +38,6 @@ function App() {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
-  const [isProfileUpdating, setIsProfileUpdating] = useState(false);
 
   // New state for authentication
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -57,6 +56,22 @@ function App() {
   const closeActiveModal = () => {
     setActiveModal("");
   };
+
+  // Universal close modal handler for authentication modals
+  const handleCloseModal = () => {
+    setIsRegisterModalOpen(false);
+    setIsLoginModalOpen(false);
+    setIsEditProfileModalOpen(false);
+  };
+
+  // Universal submit handler for handling loading states and modal closing
+  const handleSubmit = (request) => {
+    setIsLoading(true);
+    request()
+      .then(handleCloseModal)
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  };
   const handleDeleteClick = (id) => {
     setItemToDelete(id);
     setActiveModal("confirm-delete");
@@ -66,30 +81,38 @@ function App() {
     { name, imageUrl, weatherType },
     resetForm
   ) => {
-    const token = localStorage.getItem("jwt");
-    addItem({ name, imageUrl, weatherType }, token)
-      .then((newItem) => {
+    const makeRequest = () => {
+      const token = localStorage.getItem("jwt");
+      return addItem({ name, imageUrl, weatherType }, token).then((newItem) => {
         setClothingItems([newItem, ...clothingItems]);
-        closeActiveModal();
         resetForm();
-      })
-      .catch((err) => {
-        console.log(err);
+        closeActiveModal();
       });
+    };
+
+    setIsLoading(true);
+    makeRequest()
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
   };
 
   const handleConfirmDelete = () => {
     if (itemToDelete) {
-      const token = localStorage.getItem("jwt");
-      removeItem(itemToDelete, token)
-        .then(() => {
+      const makeRequest = () => {
+        const token = localStorage.getItem("jwt");
+        return removeItem(itemToDelete, token).then(() => {
           setClothingItems((prevItems) =>
             prevItems.filter((item) => item._id !== itemToDelete)
           );
-          closeActiveModal();
           setItemToDelete(null);
-        })
-        .catch(console.error);
+          closeActiveModal();
+        });
+      };
+
+      setIsLoading(true);
+      makeRequest()
+        .catch(console.error)
+        .finally(() => setIsLoading(false));
     }
   };
 
@@ -97,44 +120,42 @@ function App() {
   const handleOpenRegisterModal = () => setIsRegisterModalOpen(true);
   const handleCloseRegisterModal = () => setIsRegisterModalOpen(false);
   const handleRegister = (formData) => {
-    register(formData)
-      .then(() => {
-        return authorize({
-          email: formData.email,
-          password: formData.password,
+    const makeRequest = () => {
+      return register(formData)
+        .then(() => {
+          return authorize({
+            email: formData.email,
+            password: formData.password,
+          });
+        })
+        .then((res) => {
+          localStorage.setItem("jwt", res.token);
+          return checkToken(res.token);
+        })
+        .then((userData) => {
+          setCurrentUser(userData);
+          setIsLoggedIn(true);
         });
-      })
-      .then((res) => {
-        localStorage.setItem("jwt", res.token);
-        return checkToken(res.token);
-      })
-      .then((userData) => {
-        setCurrentUser(userData);
-        setIsLoggedIn(true);
-        handleCloseRegisterModal();
-      })
-      .catch((err) => {
-        console.error("Registration error:", err);
-      });
+    };
+    handleSubmit(makeRequest);
   };
 
   // LoginModal handlers
   const handleOpenLoginModal = () => setIsLoginModalOpen(true);
   const handleCloseLoginModal = () => setIsLoginModalOpen(false);
   const handleLogin = (formData) => {
-    authorize(formData)
-      .then((res) => {
-        localStorage.setItem("jwt", res.token);
-        return checkToken(res.token);
-      })
-      .then((userData) => {
-        setCurrentUser(userData);
-        setIsLoggedIn(true);
-        handleCloseLoginModal();
-      })
-      .catch((err) => {
-        console.error("Login error:", err);
-      });
+    const makeRequest = () => {
+      return authorize(formData)
+        .then((res) => {
+          localStorage.setItem("jwt", res.token);
+          return checkToken(res.token);
+        })
+        .then((userData) => {
+          setCurrentUser(userData);
+          setIsLoggedIn(true);
+        });
+    };
+    handleSubmit(makeRequest);
   };
 
   const handleSignOut = () => {
@@ -147,15 +168,13 @@ function App() {
   const handleCloseEditProfileModal = () => setIsEditProfileModalOpen(false);
 
   const handleUpdateUser = ({ name, avatar }) => {
-    setIsProfileUpdating(true);
-    const token = localStorage.getItem("jwt");
-    updateUser({ name, avatar }, token)
-      .then((updatedUser) => {
+    const makeRequest = () => {
+      const token = localStorage.getItem("jwt");
+      return updateUser({ name, avatar }, token).then((updatedUser) => {
         setCurrentUser(updatedUser);
-        handleCloseEditProfileModal();
-      })
-      .catch(console.error)
-      .finally(() => setIsProfileUpdating(false));
+      });
+    };
+    handleSubmit(makeRequest);
   };
 
   const handleCardLike = ({ _id, isLiked }) => {
@@ -268,6 +287,7 @@ function App() {
             onClose={closeActiveModal}
             isOpen={activeModal === "add-garment"}
             onAddItemModalSubmit={handleAddItemModalSubmit}
+            isLoading={isLoading}
           />
           <ItemModal
             isOpen={activeModal === "preview"}
@@ -279,23 +299,34 @@ function App() {
             isOpen={activeModal === "confirm-delete"}
             onClose={closeActiveModal}
             onConfirm={handleConfirmDelete}
+            isLoading={isLoading}
           />
-          <RegisterModal
-            isOpen={isRegisterModalOpen}
-            onClose={handleCloseRegisterModal}
-            onRegister={handleRegister}
-          />
-          <LoginModal
-            isOpen={isLoginModalOpen}
-            onClose={handleCloseLoginModal}
-            onLogin={handleLogin}
-          />
-          <EditProfileModal
-            isOpen={isEditProfileModalOpen}
-            onClose={handleCloseEditProfileModal}
-            onUpdateUser={handleUpdateUser}
-            isLoading={isProfileUpdating}
-          />
+          {isRegisterModalOpen && (
+            <RegisterModal
+              isOpen={isRegisterModalOpen}
+              onClose={handleCloseRegisterModal}
+              onRegister={handleRegister}
+              onSignIn={handleOpenLoginModal}
+              isLoading={isLoading}
+            />
+          )}
+          {isLoginModalOpen && (
+            <LoginModal
+              isOpen={isLoginModalOpen}
+              onClose={handleCloseLoginModal}
+              onLogin={handleLogin}
+              onSignUp={handleOpenRegisterModal}
+              isLoading={isLoading}
+            />
+          )}
+          {isEditProfileModalOpen && (
+            <EditProfileModal
+              isOpen={isEditProfileModalOpen}
+              onClose={handleCloseEditProfileModal}
+              onUpdateUser={handleUpdateUser}
+              isLoading={isLoading}
+            />
+          )}
         </div>
       </CurrentTemperatureUnitContext.Provider>
     </CurrentUserContext.Provider>
