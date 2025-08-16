@@ -1,11 +1,8 @@
-import React from "react";
 import closeBtn from "../../assets/closebtn.svg";
 import "./DeleteConfirmationModal.css";
-import { use } from "react";
 import useModalClose from "../../hooks/useModalClose";
 
 const DeleteConfirmationModal = ({
-  activeModal,
   onClose,
   onConfirm,
   isOpen,

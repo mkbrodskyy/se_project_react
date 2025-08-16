@@ -10,7 +10,6 @@ import { coordinates, APIkey } from "../../utils/constants";
 import { useEffect, useState } from "react";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit";
 import AddItemModal from "../AddItemModal/AddItemModal";
-import { defaultClothingItems } from "../../utils/constants";
 import { getItems, addItem, removeItem, updateUser } from "../../utils/api";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
@@ -54,12 +53,6 @@ function App() {
   };
   const closeActiveModal = () => {
     setActiveModal("");
-  };
-
-  const handleCloseModal = () => {
-    setIsRegisterModalOpen(false);
-    setIsLoginModalOpen(false);
-    setIsEditProfileModalOpen(false);
   };
 
   // Universal submit handler for loading states and modal closing

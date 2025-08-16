@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import closeBtn from "../../assets/closebtn.svg";
 import "./ItemModal.css";

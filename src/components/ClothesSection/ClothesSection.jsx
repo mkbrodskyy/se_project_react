@@ -1,8 +1,5 @@
-import React from "react";
 import "../SideBar/SideBar.css";
-import { Link } from "react-router-dom";
 import ItemCard from "../ItemCard/ItemCard";
-import { defaultClothingItems } from "../../utils/constants";
 import "./ClothesSection.css";
 
 function ClothesSection({

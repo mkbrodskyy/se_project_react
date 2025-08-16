@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import heartOutline from "../../assets/heart-outline.svg";
 import heartFilled from "../../assets/heart-filled.svg";

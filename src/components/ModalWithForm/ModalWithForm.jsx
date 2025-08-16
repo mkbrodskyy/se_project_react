@@ -1,7 +1,5 @@
-import React from "react";
 import "./ModalWithForm.css";
 import closeBtn from "../../assets/closebtn.svg";
-import { use } from "react";
 import useModalClose from "../../hooks/useModalClose";
 
 const ModalWithForm = ({

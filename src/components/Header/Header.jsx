@@ -2,10 +2,9 @@ import "./Header.css";
 import logo from "../../assets/logo.svg";
 import avatar from "../../assets/avatar.png";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
-import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
-import React, { useContext } from "react";
+import { useContext } from "react";
 
 function Header({
   handleAddClick,
@@ -13,7 +12,6 @@ function Header({
   isLoggedIn,
   onSignUp,
   onSignIn,
-  onSignOut,
 }) {
   const currentUser = useContext(CurrentUserContext);
   const currentDate = new Date().toLocaleString("default", {
