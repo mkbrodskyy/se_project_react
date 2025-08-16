@@ -6,9 +6,7 @@ import useModalClose from "../../hooks/useModalClose";
 
 const ItemModal = ({ isOpen, onClose, card, onDeleteClick }) => {
   const currentUser = useContext(CurrentUserContext);
-
-  // Check if the current user is the owner
-  const isOwn = card.owner === currentUser?._id; // or card.owner._id if owner is an object
+  const isOwn = card.owner === currentUser?._id;
 
   useModalClose(isOpen, onClose);
   return (

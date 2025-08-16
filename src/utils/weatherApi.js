@@ -17,6 +17,7 @@ export const filterWeatherData = (data) => {
   result.city = data.name;
   result.temp = {
     F: Math.round(data.main.temp),
+    // Convert Fahrenheit to Celsius
     C: Math.round(((data.main.temp - 32) * 5) / 9),
   };
   result.type = getWeatherType(result.temp.F);
@@ -25,11 +26,13 @@ export const filterWeatherData = (data) => {
   return result;
 };
 
+// Check if current time is between sunrise and sunset
 const isDay = ({ sunrise, sunset }) => {
   const now = Date.now();
   return sunrise * 1000 < now && now < sunset * 1000;
 };
 
+// Categorize temperature into clothing weather types
 const getWeatherType = (temperature) => {
   if (temperature > 86) {
     return "hot";

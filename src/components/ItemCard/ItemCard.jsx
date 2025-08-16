@@ -1,4 +1,3 @@
-// import ItemCard from "../ItemCard/ItemCard}";
 import React, { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import heartOutline from "../../assets/heart-outline.svg";
@@ -9,8 +8,6 @@ function ItemCard({ item, onCardClick, onCardLike }) {
   const currentUser = useContext(CurrentUserContext);
   const isLoggedIn = !!currentUser;
   const isLiked = item.likes.some((id) => id === currentUser?._id);
-
-// console.log (item.likes[0]);
 
   const handleCardClick = () => {
     onCardClick(item);

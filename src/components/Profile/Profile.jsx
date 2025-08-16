@@ -16,7 +16,7 @@ function Profile({
   const currentUser = useContext(CurrentUserContext);
 
   const userItems = clothingItems.filter(
-    (item) => item.owner === currentUser?._id // or item.owner._id if owner is an object
+    (item) => item.owner === currentUser?._id
   );
 
   return (

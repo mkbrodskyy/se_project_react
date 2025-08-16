@@ -6,7 +6,6 @@ function getItems() {
   return fetch(`${baseUrl}/items`).then(checkResponse);
 }
 
-// addItem
 const addItem = ({ name, imageUrl, weatherType }, token) => {
   return fetch(`${baseUrl}/items`, {
     method: "POST",
@@ -18,7 +17,6 @@ const addItem = ({ name, imageUrl, weatherType }, token) => {
   }).then(checkResponse);
 };
 
-// removeItem
 const removeItem = (id, token) => {
   return fetch(`${baseUrl}/items/${id}`, {
     method: "DELETE",
@@ -29,7 +27,6 @@ const removeItem = (id, token) => {
   }).then(checkResponse);
 };
 
-// updateUser
 const updateUser = (data, token) => {
   return fetch(`${baseUrl}/users/me`, {
     method: "PATCH",

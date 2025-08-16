@@ -17,8 +17,8 @@ import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
 import { register, authorize, checkToken } from "../../utils/auth";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute"; // <-- Add this import
-import EditProfileModal from "../EditProfileModal/EditProfileModal"; // Add this import
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
 import { addCardLike, removeCardLike } from "../../utils/api";
 
 function App() {
@@ -39,7 +39,6 @@ function App() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
 
-  // New state for authentication
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -57,18 +56,17 @@ function App() {
     setActiveModal("");
   };
 
-  // Universal close modal handler for authentication modals
   const handleCloseModal = () => {
     setIsRegisterModalOpen(false);
     setIsLoginModalOpen(false);
     setIsEditProfileModalOpen(false);
   };
 
-  // Universal submit handler for handling loading states and modal closing
+  // Universal submit handler for loading states and modal closing
   const handleSubmit = (request) => {
     setIsLoading(true);
     request()
-      .then(handleCloseModal)
+      .then(closeActiveModal)
       .catch(console.error)
       .finally(() => setIsLoading(false));
   };
@@ -86,14 +84,10 @@ function App() {
       return addItem({ name, imageUrl, weatherType }, token).then((newItem) => {
         setClothingItems([newItem, ...clothingItems]);
         resetForm();
-        closeActiveModal();
       });
     };
 
-    setIsLoading(true);
-    makeRequest()
-      .catch(console.error)
-      .finally(() => setIsLoading(false));
+    handleSubmit(makeRequest);
   };
 
   const handleConfirmDelete = () => {
@@ -105,18 +99,13 @@ function App() {
             prevItems.filter((item) => item._id !== itemToDelete)
           );
           setItemToDelete(null);
-          closeActiveModal();
         });
       };
 
-      setIsLoading(true);
-      makeRequest()
-        .catch(console.error)
-        .finally(() => setIsLoading(false));
+      handleSubmit(makeRequest);
     }
   };
 
-  // RegisterModal handlers
   const handleOpenRegisterModal = () => setIsRegisterModalOpen(true);
   const handleCloseRegisterModal = () => setIsRegisterModalOpen(false);
   const handleRegister = (formData) => {
@@ -140,7 +129,6 @@ function App() {
     handleSubmit(makeRequest);
   };
 
-  // LoginModal handlers
   const handleOpenLoginModal = () => setIsLoginModalOpen(true);
   const handleCloseLoginModal = () => setIsLoginModalOpen(false);
   const handleLogin = (formData) => {
@@ -177,24 +165,20 @@ function App() {
     handleSubmit(makeRequest);
   };
 
+  // Handle like/unlike functionality for clothing items
   const handleCardLike = ({ _id, isLiked }) => {
-    // console.log("handleCardLike called:", { _id, isLiked });
     const token = localStorage.getItem("jwt");
     if (!isLiked) {
-      // console.log("Adding like for card:", _id);
       addCardLike(_id, token)
         .then((updatedCard) => {
-          // console.log("Like added, updated card:", updatedCard);
           setClothingItems((cards) =>
             cards.map((item) => (item._id === _id ? updatedCard : item))
           );
         })
         .catch(console.error);
     } else {
-      // console.log("Removing like for card:", _id);
       removeCardLike(_id, token)
         .then((updatedCard) => {
-          // console.log("Like removed, updated card:", updatedCard);
           setClothingItems((cards) =>
             cards.map((item) => (item._id === _id ? updatedCard : item))
           );
@@ -203,7 +187,7 @@ function App() {
     }
   };
 
-  // Check token on app load
+  // Check authentication token on app load
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
@@ -232,7 +216,6 @@ function App() {
   useEffect(() => {
     getItems()
       .then((data) => {
-        console.log("Items loaded from API:", data);
         setClothingItems(data.reverse());
       })
       .catch(console.error);
@@ -273,7 +256,7 @@ function App() {
                       onCardClick={handleCardClick}
                       handleAddClick={handleAddClick}
                       clothingItems={clothingItems}
-                      onEditProfile={handleOpenEditProfileModal} // <-- Add this prop
+                      onEditProfile={handleOpenEditProfileModal}
                       onSignOut={handleSignOut}
                       onCardLike={handleCardLike}
                     />

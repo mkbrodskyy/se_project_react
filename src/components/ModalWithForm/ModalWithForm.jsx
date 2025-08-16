@@ -7,6 +7,8 @@ import useModalClose from "../../hooks/useModalClose";
 const ModalWithForm = ({
   children,
   buttonText,
+  secondButtonText,
+  onSecondButtonClick,
   title,
   isOpen,
   onClose,
@@ -22,9 +24,20 @@ const ModalWithForm = ({
         </button>
         <form onSubmit={onSubmit} className="modal__form">
           {children}
-          <button type="submit" className="modal__submit">
-            {buttonText}
-          </button>
+          <div className="modal__submit-wrapper">
+            <button type="submit" className="modal__submit">
+              {buttonText}
+            </button>
+            {secondButtonText && (
+              <button
+                type="button"
+                className="modal__submit-button"
+                onClick={onSecondButtonClick}
+              >
+                {secondButtonText}
+              </button>
+            )}
+          </div>
         </form>
       </div>
     </div>

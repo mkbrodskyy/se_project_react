@@ -1,4 +1,6 @@
+// Weather background options for different conditions and times
 export const weatherOptions = [
+  // Day weather conditions
   {
     day: true,
     condition: "clear",
@@ -29,6 +31,7 @@ export const weatherOptions = [
     condition: "storm",
     url: new URL("../assets/day/storm.png", import.meta.url).href,
   },
+  // Night weather conditions
   {
     day: false,
     condition: "clear",
@@ -61,6 +64,7 @@ export const weatherOptions = [
   },
 ];
 
+// Default clothing items for development/testing
 export const defaultClothingItems = [
   {
     _id: 0,
