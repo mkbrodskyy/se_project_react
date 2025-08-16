@@ -5,6 +5,6 @@ const ProtectedRoute = ({ children, isLoggedIn }) => {
     return <Navigate to="/" replace />;
   }
   return children;
-}
+};
 
 export default ProtectedRoute;
