@@ -52,7 +52,10 @@ function App() {
     setActiveModal("add-garment");
   };
   const closeActiveModal = () => {
-    setActiveModal("");
+    setActiveModal(""); // any modal
+    setIsLoginModalOpen(false); // login modal
+    setIsRegisterModalOpen(false); // register modal
+    setIsEditProfileModalOpen(false); // edit profile modal
   };
 
   // Universal submit handler for loading states and modal closing

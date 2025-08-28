@@ -41,6 +41,11 @@
   gap: 12px;
 }
 
+.header__avatar {
+  width: 40px;
+  border-radius: 50%;
+}
+
 .header__username {
   margin: 0;
 }

@@ -1,6 +1,5 @@
 import "./Header.css";
 import logo from "../../assets/logo.svg";
-import avatar from "../../assets/avatar.png";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
@@ -45,10 +44,11 @@ function Header({
               <div className="header__user-container">
                 <p className="header__username">{currentUser?.name}</p>
                 <img
-                  src={currentUser?.avatar || avatar}
-                  alt="User avatar"
                   className="header__avatar"
-                  style={{ width: 32, height: 32, borderRadius: "50%" }}
+                  src={
+                    currentUser?.avatar || require("../../assets/avatar.png")
+                  }
+                  alt="User avatar"
                 />
               </div>
             </Link>

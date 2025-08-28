@@ -1,6 +1,9 @@
 import { checkResponse } from "./weatherApi";
 
-const baseUrl = "http://localhost:3001";
+const baseUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://api.frontend.twilightparadox.com"
+    : "http://localhost:3001";
 
 function getItems() {
   return fetch(`${baseUrl}/items`).then(checkResponse);

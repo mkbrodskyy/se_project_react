@@ -119,3 +119,10 @@ export const coordinates = {
 };
 
 export const APIkey = "2215a9dff5e57738e9649bceda8bf0fc";
+
+const baseUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://api.frontend.twilightparadox.com"
+    : "http://localhost:3001";
+
+export { baseUrl };

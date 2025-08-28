@@ -1,9 +1,9 @@
 import { useContext } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
+import avatarPlaceholder from "../../assets/avatar.png";
 import SideBar from "../SideBar/SideBar";
-import "../../assets/avatar.png";
 import "./Profile.css";
 import ClothesSection from "../ClothesSection/ClothesSection";
-import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function Profile({
   clothingItems,
